@@ -1,12 +1,17 @@
 const elementoMostraLivroHtml = document.getElementById('livros')
+const elementoValorTotal = document.getElementById('valor_total_livros_disponiveis')
+console.log(elementoValorTotal)
 
 function montaLivrosTela(livros){
     elementoMostraLivroHtml.innerHTML =''
+    let classeInds =''
     livros.forEach(livro => {
-        
+        let livroOk = livro.quantidade
+        classeInds = (livroOk > 0) ?'livro__imagens':'livro__imagens indisponivel'
+        //poderia ser um simples if, ou uma funcao.. depende da escolha   
         elementoMostraLivroHtml.innerHTML +=`
         <div class="livro">
-            <img class="livro__imagens" 
+            <img class=" ${classeInds}" 
             src="${livro.imagem}" alt="${livro.alt}" />
             <h2 class="livro__titulo">
                 ${livro.titulo}
@@ -17,8 +22,7 @@ function montaLivrosTela(livros){
                 <span class="tag">${livro.categoria}</span>
             </div>
         </div>
-        
         `
-        
+       
     });
 }
