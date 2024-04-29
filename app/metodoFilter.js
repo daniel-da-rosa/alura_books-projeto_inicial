@@ -1,22 +1,25 @@
+import { conexaoExport } from "./conexao.js"
+import montaLivrosTela  from './forEach.js'
+
+const listaLivros = await conexaoExport.conexao()
 const btnFiltro = document.querySelectorAll('.btn')
+const elemento = document.getElementById('livros')
+let valorTotaLivro = 0
 
 btnFiltro.forEach(btn => btn.addEventListener('click',filtrarLivros))
 
-let valorTotaLivro = 0
-
-
-
 function filtrarLivros(){
+    debugger
     let categoriaBotao = document.getElementById(this.id)
     if (categoriaBotao.value !=''){
         let livrosFiltrado = listaLivros.filter(livro => livro.categoria == categoriaBotao.value)
-        montaLivrosTela(livrosFiltrado)
+        montaLivrosTela(elemento,livrosFiltrado,' ')
     }else{
         //faz um ternário para verificar se os livros serao mostrados por preço ou diponibilidade
         let livrosOrdenados =[]
         livrosOrdenados = (this.id =="btnOrdenarPorPreco") ? livrosOrdenados = listaLivros.sort((a,b)=> a.preco - b.preco)
                                                            : livrosOrdenados = listaLivros.filter((livro)=> livro.quantidade > 0)
-         montaLivrosTela(livrosOrdenados)
+         montaLivrosTela(elemento,livrosOrdenados,' ')
          if (this.id !="btnOrdenarPorPreco"){
           
             valorTotaLivro = somaValorLivros(livrosOrdenados)
